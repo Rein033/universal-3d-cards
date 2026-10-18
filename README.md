@@ -3,6 +3,7 @@
 [![HACS Custom](https://img.shields.io/badge/HACS-Custom-41BDF5.svg)](https://hacs.xyz/)
 [![Validate](https://github.com/Rein033/universal-3d-cards/actions/workflows/validate.yml/badge.svg)](https://github.com/Rein033/universal-3d-cards/actions/workflows/validate.yml)
 [![Release](https://img.shields.io/github/v/release/Rein033/universal-3d-cards)](https://github.com/Rein033/universal-3d-cards/releases)
+[![Buy me a coffee](https://img.shields.io/badge/Buy%20me%20a%20coffee-rein033-FFDD00?logo=buymeacoffee&logoColor=black)](https://buymeacoffee.com/rein033)
 
 **One dashboard card for all your 3D printers.** A drawn printer with your print growing inside it, live camera,
 slicer info, AMS/ACE spools in their real colours, temperatures and controls. Works with the 3D printer integrations
@@ -112,6 +113,10 @@ Lab, Moonraker webcams, Creality local, OctoPrint, Anycubic).
 
 The card is plain JavaScript without dependencies. Edit the files in `src/` and run `./build.sh`, which glues them into
 `universal-3d-cards.js` (the file HACS serves). CI checks that the built file matches `src/`.
+
+## Support
+
+Everything here is free. If it saves you time or makes your dashboard nicer, you can [buy me a coffee](https://buymeacoffee.com/rein033) ☕
 
 ## License
 
