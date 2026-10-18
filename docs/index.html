@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>3D Printer Card for Home Assistant</title>
+<meta name="description" content="One Home Assistant dashboard card for all your 3D printers: Bambu Lab, Klipper, Creality, Anycubic and OctoPrint. Drawn printer, live camera, slicer info and AMS spools.">
+<meta property="og:title" content="3D Printer Card for Home Assistant">
+<meta property="og:description" content="One dashboard card for Bambu Lab, Klipper, Creality, Anycubic and OctoPrint printers.">
+<meta property="og:image" content="images/printers-dark.png">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect x='3' y='6' width='26' height='23' rx='4' fill='%23ff4081'/%3E%3Crect x='7' y='10' width='18' height='15' rx='2' fill='%23fff'/%3E%3Crect x='13' y='17' width='6' height='6' rx='1' fill='%23ff4081'/%3E%3C/svg%3E">
+<style>
+  :root {
+    --bg: #fafafa; --fg: #1c1c20; --muted: #5f6168; --card: #ffffff; --line: rgba(0,0,0,.09);
+    --accent: #e91e63; --accent-soft: rgba(233,30,99,.1); --code: #f2f2f5;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) { --bg: #111114; --fg: #ececf0; --muted: #a2a4ab; --card: #1b1b20; --line: rgba(255,255,255,.09);
+      --accent: #ff4081; --accent-soft: rgba(255,64,129,.14); --code: #222228; }
+  }
+  :root[data-theme="dark"] { --bg: #111114; --fg: #ececf0; --muted: #a2a4ab; --card: #1b1b20; --line: rgba(255,255,255,.09);
+    --accent: #ff4081; --accent-soft: rgba(255,64,129,.14); --code: #222228; }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { margin: 0; background: var(--bg); color: var(--fg); font: 16px/1.6 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+  a { color: var(--accent); }
+  .wrap { max-width: 1080px; margin: 0 auto; padding: 0 16px; }
+  header.top { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 18px 0; }
+  .brand { display: flex; align-items: center; gap: 10px; font-weight: 700; text-decoration: none; color: var(--fg); }
+  .brand svg { width: 30px; height: 30px; }
+  nav a { color: var(--muted); text-decoration: none; margin-left: 18px; font-size: .95rem; }
+  nav a:hover { color: var(--fg); }
+  .hero { text-align: center; padding: 48px 0 24px; }
+  .hero h1 { font-size: clamp(2rem, 5vw, 3.2rem); line-height: 1.1; margin: 0 0 14px; letter-spacing: -.02em; }
+  .hero h1 span { color: var(--accent); }
+  .hero p { color: var(--muted); font-size: 1.15rem; max-width: 680px; margin: 0 auto 26px; }
+  .btns { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+  .btn { display: inline-flex; align-items: center; gap: 8px; padding: 12px 20px; border-radius: 12px; font-weight: 600; text-decoration: none; }
+  .btn.main { background: var(--accent); color: #fff; }
+  .btn.alt { border: 1px solid var(--line); color: var(--fg); background: var(--card); }
+  .shot { margin: 36px auto 0; border-radius: 18px; overflow: hidden; border: 1px solid var(--line); box-shadow: 0 20px 60px rgba(0,0,0,.18); }
+  .shot img { display: block; width: 100%; height: auto; }
+  section { padding: 56px 0 8px; }
+  h2 { font-size: 1.8rem; margin: 0 0 8px; letter-spacing: -.01em; }
+  .lead { color: var(--muted); margin: 0 0 24px; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px; }
+  .feat { background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 18px; }
+  .feat b { display: block; margin-bottom: 4px; }
+  .feat span { color: var(--muted); font-size: .95rem; }
+  .ic { width: 38px; height: 38px; border-radius: 10px; background: var(--accent-soft); color: var(--accent); display: flex; align-items: center; justify-content: center; margin-bottom: 10px; }
+  .ic svg { width: 22px; height: 22px; }
+  table { width: 100%; border-collapse: collapse; background: var(--card); border: 1px solid var(--line); border-radius: 16px; overflow: hidden; }
+  th, td { text-align: left; padding: 12px 14px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  th { font-size: .8rem; text-transform: uppercase; letter-spacing: .05em; color: var(--muted); }
+  tr:last-child td { border-bottom: none; }
+  .table { overflow-x: auto; }
+  .two { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; align-items: center; }
+  .two img { width: 100%; border-radius: 16px; border: 1px solid var(--line); }
+  pre { background: var(--code); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; overflow-x: auto; font-size: .9rem; }
+  ol li { margin-bottom: 8px; overflow-wrap: anywhere; }
+  code { overflow-wrap: anywhere; }
+  img { max-width: 100%; }
+  footer { color: var(--muted); font-size: .9rem; padding: 48px 0 40px; text-align: center; }
+  @media (max-width: 720px) { .two { grid-template-columns: 1fr; } nav { display: none; } .hero { padding-top: 24px; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <a class="brand" href="#"><svg viewBox="0 0 32 32" aria-hidden="true"><rect x="3" y="6" width="26" height="23" rx="4" fill="currentColor" opacity=".15"/><rect x="3" y="6" width="26" height="23" rx="4" fill="none" stroke="var(--accent)" stroke-width="2"/><rect x="9" y="12" width="14" height="3" rx="1.5" fill="var(--accent)"/><rect x="12" y="18" width="8" height="6" rx="1" fill="var(--accent)"/></svg>3D Printer Card</a>
+    <nav><a href="#features">Features</a><a href="#printers">Printers</a><a href="#install">Install</a><a href="https://github.com/Rein033/lovelace-3d-printer-card">GitHub</a></nav>
+  </header>
+
+  <div class="hero">
+    <h1>One card for <span>all your 3D printers</span></h1>
+    <p>A Home Assistant dashboard card with a drawn printer and your print growing inside it. Live camera, slicer info, AMS spools in their real colours and controls. Bambu Lab, Klipper, Creality, Anycubic and OctoPrint.</p>
+    <div class="btns">
+      <a class="btn main" href="https://my.home-assistant.io/redirect/hacs_repository/?owner=Rein033&amp;repository=lovelace-3d-printer-card&amp;category=plugin">Install with HACS</a>
+      <a class="btn alt" href="https://github.com/Rein033/lovelace-3d-printer-card">View on GitHub</a>
+    </div>
+    <div class="shot"><img src="images/printers-dark.png" alt="3D Printer Card showing a Bambu Lab X1C with AMS, a Bambu Lab A1 and a Voron on Klipper" width="2566" height="1262"></div>
+  </div>
+
+  <section id="features">
+    <h2>Everything at a glance</h2>
+    <p class="lead">Pick any entity of your printer. The card finds the rest by itself, also after you rename entities.</p>
+    <div class="grid">
+      <div class="feat"><div class="ic"><svg viewBox="0 0 24 24"><path fill="currentColor" d="M19 6h-1V2H6v4H5a3 3 0 0 0-3 3v6h4v4h12v-4h4V9a3 3 0 0 0-3-3M8 4h8v2H8zm8 13H8v-5h8z"/></svg></div><b>Drawn printer</b><span>Bambu Lab with AMS, bed slingers, Voron, Creality K1 and Kobra S1 with ACE. The print preview grows inside it in your filament colour.</span></div>
+      <div class="feat"><div class="ic"><svg viewBox="0 0 24 24"><path fill="currentColor" d="M18 10.5V6a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-4.5l4 4v-11z"/></svg></div><b>Live camera</b><span>Switch to the printer's camera on the card. It only streams while you look at it.</span></div>
+      <div class="feat"><div class="ic"><svg viewBox="0 0 24 24"><path fill="currentColor" d="M3 5h18v2H3zm0 6h12v2H3zm0 6h18v2H3z"/></svg></div><b>Slicer info</b><span>Material, layer height, layers, filament used, the slicer's estimate and which slicer made it.</span></div>
+      <div class="feat"><div class="ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="3" fill="currentColor"/></svg></div><b>AMS &amp; ACE spools</b><span>Your spools in their real colours, the active one outlined.</span></div>
+      <div class="feat"><div class="ic"><svg viewBox="0 0 24 24"><path fill="currentColor" d="M8 5v14l11-7z"/></svg></div><b>Controls</b><span>Pause, resume and cancel (with confirmation), and the printer light.</span></div>
+      <div class="feat"><div class="ic"><svg viewBox="0 0 24 24"><path fill="currentColor" d="M4 5h16v3H4zm0 5.5h16v3H4zM4 16h16v3H4z"/></svg></div><b>Printer group</b><span>All printers in one list with progress and finish time. Great for a print farm or a wall tablet.</span></div>
+    </div>
+  </section>
+
+  <section id="printers">
+    <h2>Works with your printers</h2>
+    <p class="lead">Uses the 3D printer integration you already have.</p>
+    <div class="table"><table>
+      <thead><tr><th>Integration</th><th>Printers</th><th>Drawing</th></tr></thead>
+      <tbody>
+        <tr><td><a href="https://github.com/greghesp/ha-bambulab">Bambu Lab</a></td><td>X1, P1S, P1P, P2S, H2D, A1, A1 mini</td><td>Enclosed with AMS, or bed slinger for A1</td></tr>
+        <tr><td><a href="https://github.com/marcolivierarsenault/moonraker-home-assistant">Moonraker</a></td><td>Klipper: Voron, RatRig, Sovol, …</td><td>Voron frame, or bed slinger</td></tr>
+        <tr><td><a href="https://github.com/3dg1luk43/ha_creality_ws">Creality (local)</a></td><td>K1, K1C, K1 Max, K2, Hi, Ender-3 V3</td><td>Creality K1, or bed slinger</td></tr>
+        <tr><td><a href="https://github.com/Rein033/ha-creality-cloud">Creality Cloud</a></td><td>Printers in the Creality Cloud app</td><td>Creality K1, plus history and timelapse</td></tr>
+        <tr><td><a href="https://github.com/WaresWichall/hass-anycubic_cloud">Anycubic Cloud</a></td><td>Kobra S1, Kobra 2/3, …</td><td>Kobra S1 with ACE Pro, or bed slinger</td></tr>
+        <tr><td><a href="https://www.home-assistant.io/integrations/octoprint/">OctoPrint</a></td><td>Anything running OctoPrint</td><td>Bed slinger</td></tr>
+      </tbody>
+    </table></div>
+  </section>
+
+  <section>
+    <div class="two">
+      <div>
+        <h2>Light and dark, on every screen</h2>
+        <p class="lead">Follows your Home Assistant theme and language. Built to stay light on wall tablets: it only redraws when your printer changes, and the moving toolhead never repaints the drawing.</p>
+      </div>
+      <img src="images/printers-light.png" alt="The card in a light theme with a Creality K1C, an Ender on OctoPrint and an Anycubic Kobra S1" loading="lazy">
+    </div>
+  </section>
+
+  <section id="install">
+    <h2>Install</h2>
+    <ol>
+      <li>In HACS: ⋮ → <b>Custom repositories</b> → add <code>https://github.com/Rein033/lovelace-3d-printer-card</code> as <b>Dashboard</b>, then <b>Download</b>.</li>
+      <li>Edit a dashboard → <b>Add card</b> → search <b>3D Printer</b>.</li>
+      <li>Pick your printer in the visual editor. Done.</li>
+    </ol>
+    <p class="lead">Prefer YAML?</p>
+<pre><code>type: custom:printer-3d-card
+entity: sensor.x1c_print_status   # any entity of the printer
+
+type: custom:printer-3d-group-card
+title: Printers</code></pre>
+  </section>
+
+  <footer>
+    MIT licensed · Original drawings · Not affiliated with Bambu Lab, Creality, Anycubic, Voron, Klipper or OctoPrint<br>
+    <a href="https://github.com/Rein033/lovelace-3d-printer-card">github.com/Rein033/lovelace-3d-printer-card</a>
+  </footer>
+</div>
+</body>
+</html>
