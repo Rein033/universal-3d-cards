@@ -170,16 +170,16 @@ if (!customElements.get('printer-3d-card')) {
   window.customCards = window.customCards || [];
   window.customCards.push({
     type: 'printer-3d-card',
-    name: '3D Printer Card',
+    name: 'Universal 3D Printer Card',
     description: 'Drawn printer with the print growing inside it, live camera, slicer info, spools and controls. Bambu Lab, Klipper, Creality, Anycubic and OctoPrint.',
     preview: true,
-    documentationURL: 'https://github.com/Rein033/lovelace-3d-printer-card',
+    documentationURL: 'https://github.com/Rein033/universal-3d-cards',
   }, {
     type: 'printer-3d-group-card',
-    name: '3D Printer Group',
+    name: 'Universal 3D Printer Group',
     description: 'All your 3D printers in one compact list: status, progress and finish time.',
     preview: true,
-    documentationURL: 'https://github.com/Rein033/lovelace-3d-printer-card',
+    documentationURL: 'https://github.com/Rein033/universal-3d-cards',
   });
-  console.info('%c 3D PRINTER CARD %c 0.1.0 ', 'background:#ff4081;color:#fff;font-weight:700', 'background:#333;color:#fff');
+  console.info('%c UNIVERSAL 3D CARDS %c 0.1.0 ', 'background:#ff4081;color:#fff;font-weight:700', 'background:#333;color:#fff');
 }

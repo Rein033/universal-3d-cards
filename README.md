@@ -1,14 +1,14 @@
-# 3D Printer Card
+# Universal 3D Cards
 
 [![HACS Custom](https://img.shields.io/badge/HACS-Custom-41BDF5.svg)](https://hacs.xyz/)
-[![Validate](https://github.com/Rein033/lovelace-3d-printer-card/actions/workflows/validate.yml/badge.svg)](https://github.com/Rein033/lovelace-3d-printer-card/actions/workflows/validate.yml)
-[![Release](https://img.shields.io/github/v/release/Rein033/lovelace-3d-printer-card)](https://github.com/Rein033/lovelace-3d-printer-card/releases)
+[![Validate](https://github.com/Rein033/universal-3d-cards/actions/workflows/validate.yml/badge.svg)](https://github.com/Rein033/universal-3d-cards/actions/workflows/validate.yml)
+[![Release](https://img.shields.io/github/v/release/Rein033/universal-3d-cards)](https://github.com/Rein033/universal-3d-cards/releases)
 
 **One dashboard card for all your 3D printers.** A drawn printer with your print growing inside it, live camera,
 slicer info, AMS/ACE spools in their real colours, temperatures and controls. Works with the 3D printer integrations
 you already use, with a visual editor and no YAML needed.
 
-![3D Printer Card with a Bambu Lab X1C, an A1 and a Voron](docs/images/printers-dark.png)
+![Universal 3D Cards with a Bambu Lab X1C, an A1 and a Voron](docs/images/printers-dark.png)
 
 ## Supported printers
 
@@ -54,14 +54,14 @@ The card is built to stay light, also on wall tablets:
 
 ### HACS
 
-[![Open your Home Assistant instance and open this repository in HACS.](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=Rein033&repository=lovelace-3d-printer-card&category=plugin)
+[![Open your Home Assistant instance and open this repository in HACS.](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=Rein033&repository=universal-3d-cards&category=plugin)
 
-Or: HACS → ⋮ → **Custom repositories** → `https://github.com/Rein033/lovelace-3d-printer-card`, type **Dashboard** →
+Or: HACS → ⋮ → **Custom repositories** → `https://github.com/Rein033/universal-3d-cards`, type **Dashboard** →
 **Download**. HACS adds the dashboard resource for you.
 
 ### Manual
 
-Copy `3d-printer-card.js` to `/config/www/` and add `/local/3d-printer-card.js` as a dashboard resource of type
+Copy `universal-3d-cards.js` to `/config/www/` and add `/local/universal-3d-cards.js` as a dashboard resource of type
 *JavaScript module* (Settings → Dashboards → ⋮ → Resources).
 
 ## Usage
@@ -111,7 +111,7 @@ Lab, Moonraker webcams, Creality local, OctoPrint, Anycubic).
 ## Development
 
 The card is plain JavaScript without dependencies. Edit the files in `src/` and run `./build.sh`, which glues them into
-`3d-printer-card.js` (the file HACS serves). CI checks that the built file matches `src/`.
+`universal-3d-cards.js` (the file HACS serves). CI checks that the built file matches `src/`.
 
 ## License
 

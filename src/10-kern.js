@@ -1,4 +1,4 @@
-/* 3D Printer Card for Home Assistant: one card for Bambu Lab, Klipper (Moonraker), Creality (local and cloud),
+/* Universal 3D Cards for Home Assistant: one card for Bambu Lab, Klipper (Moonraker), Creality (local and cloud),
  * Anycubic Cloud and OctoPrint printers. Drawn printer with the print growing inside it, live camera, slicer info,
  * temperatures, AMS/ACE spools and controls. Plus a group card with all printers in one list. Both have a visual editor.
  *
@@ -13,7 +13,7 @@
  *   title: Printers
  *   entities: [...]                     # optional, default: every printer found
  *
- * The printer drawings are original artwork. https://github.com/Rein033/lovelace-3d-printer-card */
+ * The printer drawings are original artwork. https://github.com/Rein033/universal-3d-cards */
 
 /* How to find each part of a printer, per integration. A matcher is a translation_key (tk), or for integrations
    without translation keys the end of the entity_id (end) plus the domain. The first match wins. */

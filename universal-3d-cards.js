@@ -1,4 +1,4 @@
-/* 3D Printer Card for Home Assistant: one card for Bambu Lab, Klipper (Moonraker), Creality (local and cloud),
+/* Universal 3D Cards for Home Assistant: one card for Bambu Lab, Klipper (Moonraker), Creality (local and cloud),
  * Anycubic Cloud and OctoPrint printers. Drawn printer with the print growing inside it, live camera, slicer info,
  * temperatures, AMS/ACE spools and controls. Plus a group card with all printers in one list. Both have a visual editor.
  *
@@ -13,7 +13,7 @@
  *   title: Printers
  *   entities: [...]                     # optional, default: every printer found
  *
- * The printer drawings are original artwork. https://github.com/Rein033/lovelace-3d-printer-card */
+ * The printer drawings are original artwork. https://github.com/Rein033/universal-3d-cards */
 
 /* How to find each part of a printer, per integration. A matcher is a translation_key (tk), or for integrations
    without translation keys the end of the entity_id (end) plus the domain. The first match wins. */
@@ -1139,16 +1139,16 @@ if (!customElements.get('printer-3d-card')) {
   window.customCards = window.customCards || [];
   window.customCards.push({
     type: 'printer-3d-card',
-    name: '3D Printer Card',
+    name: 'Universal 3D Printer Card',
     description: 'Drawn printer with the print growing inside it, live camera, slicer info, spools and controls. Bambu Lab, Klipper, Creality, Anycubic and OctoPrint.',
     preview: true,
-    documentationURL: 'https://github.com/Rein033/lovelace-3d-printer-card',
+    documentationURL: 'https://github.com/Rein033/universal-3d-cards',
   }, {
     type: 'printer-3d-group-card',
-    name: '3D Printer Group',
+    name: 'Universal 3D Printer Group',
     description: 'All your 3D printers in one compact list: status, progress and finish time.',
     preview: true,
-    documentationURL: 'https://github.com/Rein033/lovelace-3d-printer-card',
+    documentationURL: 'https://github.com/Rein033/universal-3d-cards',
   });
-  console.info('%c 3D PRINTER CARD %c 0.1.0 ', 'background:#ff4081;color:#fff;font-weight:700', 'background:#333;color:#fff');
+  console.info('%c UNIVERSAL 3D CARDS %c 0.1.0 ', 'background:#ff4081;color:#fff;font-weight:700', 'background:#333;color:#fff');
 }

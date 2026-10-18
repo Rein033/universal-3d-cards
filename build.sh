@@ -2,5 +2,5 @@
 # Glue src/*.js (in name order) into the single file HACS serves.
 set -e
 cd "$(dirname "$0")"
-cat src/*.js > 3d-printer-card.js
-echo "3d-printer-card.js: $(wc -c < 3d-printer-card.js) bytes"
+cat src/*.js > universal-3d-cards.js
+echo "universal-3d-cards.js: $(wc -c < universal-3d-cards.js) bytes"
